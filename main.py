@@ -7,7 +7,8 @@ from pathlib import Path
 import psycopg
 import redis
 import yaml
-from cloudevents.http import CloudEvent, from_http, to_binary
+from cloudevents.conversion import to_binary
+from cloudevents.http import CloudEvent, from_http
 from flask import Flask, Response, make_response, request
 
 # Load the logging configuration
