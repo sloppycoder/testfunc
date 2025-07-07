@@ -24,17 +24,24 @@ def index():
 
 @app.route("/check")
 def check():
-    source = request.args.get("source")  # 'redis' if ?source=redis
-    print("source =", source)
-    # Use `source` to select the event stream source
+    source = request.args.get("source")
     return Response(infra_check(source), content_type="text/event-stream")
 
 
 def infra_check(source):
-    for i in range(3):
+    if not source:
+        source = "all"
+
+    if source in ["db", "all"]:
+        db_url = os.environ.get("DATABASE_URL", "")
+        yield f"DATABASE_URL={db_url}\n\n"
         time.sleep(0.5)
-        yield f"checking: {i}..\n\n"
+
+    if source in ["redis", "all"]:
+        redis_svc = os.environ.get("REDIS_SVC", "redis-standalone")
+        yield f"REDIS_SVC={redis_svc}\n\n"
+        time.sleep(0.5)
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))

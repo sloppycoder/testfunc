@@ -27,5 +27,7 @@ COPY --chown=app:app --from=builder /app/venv /app/venv
 # copy application code. update .dockerignore to files that shouldn't be copied
 COPY --chown=app:app . .
 
+EXPOSE 8080
+
 ENV PATH="/app/venv/bin:$PATH"
 CMD  ["/bin/sh", "/app/entrypoint.sh"]
