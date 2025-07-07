@@ -31,7 +31,7 @@ def event_dispatch():
     app.logger.info(f"Received event: {event}")
 
     attributes = {
-        "type": "vino9.infra.test.infra.ping",
+        "type": "dev.vino9.infra.test.infra.pong",
         "source": "test/testfunc",
         "id": str(uuid.uuid4()),
         "specversion": "1.0",
