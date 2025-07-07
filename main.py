@@ -7,7 +7,8 @@ from pathlib import Path
 import psycopg
 import redis
 import yaml
-from flask import Flask, Response, request
+from cloudevents.http import CloudEvent, from_http, to_binary
+from flask import Flask, Response, make_response, request
 
 # Load the logging configuration
 LOGGING_CONFIG = {}
@@ -21,6 +22,34 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
+    return "running"
+
+
+@app.route("/", methods=["POST"])
+def event_dispatch():
+    event = from_http(request.headers, request.get_data())
+    app.logger.info(f"Received event: {event}")
+
+    attributes = {
+        "type": "vino9.infra.test.infra.ping",
+        "source": "test/testfunc",
+        "id": str(uuid.uuid4()),
+        "specversion": "1.0",
+    }
+    data = {"msg": "received"}
+
+    ce = CloudEvent(attributes, data)
+    headers, body = to_binary(ce)
+
+    response = make_response(body)
+    for k, v in headers.items():
+        response.headers[k] = v
+
+    return response
+
+
+@app.route("/", methods=["POST"])
+def event():
     return "running"
 
 
@@ -53,7 +82,7 @@ def ping_redis(host, port=6379):
 
 
 def ping_postgres(database_url):
-    message = f"pinding postgres at {database_url}\n"
+    message = f"pinging postgres at {database_url}\n"
     try:
         with psycopg.connect(database_url) as conn:
             message += "connected\n"
