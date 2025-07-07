@@ -33,10 +33,6 @@ on:
 jobs:
   pytest:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version:
-          - 3.12
 
     steps:
       - uses: actions/checkout@v4
@@ -47,8 +43,8 @@ jobs:
           version: "0.7.5"
           enable-cache: true
 
-      - name: Install Python using uv ${{ matrix.python-version }}
-        run: uv python install ${{ matrix.python-version }}
+      - name: Install Python using uv
+        run: uv python install 3.12
 
       - name: Install dependencies
         run: |
@@ -61,19 +57,7 @@ jobs:
       - name: Unit tests
         id: unit_tests
         run: |
-          uv run pytest -v -s --cov --cov-report=html
-
-          if [[ -f "htmlcov/index.html" ]]; then
-            echo "coverage_report=yes" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Upload test coverage report to GitHub pages
-        if: steps.unit_tests.outputs.coverage_report == 'yes'
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: htmlcov
-        continue-on-error: true
+          uv run pytest -v -s
 
   buildx:
     needs: pytest

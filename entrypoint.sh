@@ -2,4 +2,4 @@
 
 cd "$(dirname "$0")"
 
-/bin/sleep 100000
+python main.py
