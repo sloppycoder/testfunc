@@ -5,11 +5,11 @@ blinker==1.9.0
 click==8.2.1
     # via flask
 cloudevents==1.12.0
-    # via tf (pyproject.toml)
+    # via testfunc (pyproject.toml)
 deprecation==2.1.0
     # via cloudevents
 flask==3.1.1
-    # via tf (pyproject.toml)
+    # via testfunc (pyproject.toml)
 itsdangerous==2.2.0
     # via flask
 jinja2==3.1.6
@@ -22,15 +22,15 @@ markupsafe==3.0.2
 packaging==25.0
     # via deprecation
 psycopg==3.2.9
-    # via tf (pyproject.toml)
+    # via testfunc (pyproject.toml)
 psycopg-binary==3.2.9
     # via psycopg
 python-dotenv==1.1.1
-    # via tf (pyproject.toml)
+    # via testfunc (pyproject.toml)
 pyyaml==6.0.2
-    # via tf (pyproject.toml)
+    # via testfunc (pyproject.toml)
 redis==6.2.0
-    # via tf (pyproject.toml)
+    # via testfunc (pyproject.toml)
 typing-extensions==4.14.1
     # via psycopg
 werkzeug==3.1.3

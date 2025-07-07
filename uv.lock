@@ -477,7 +477,7 @@ wheels = [
 ]
 
 [[package]]
-name = "tf"
+name = "testfunc"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

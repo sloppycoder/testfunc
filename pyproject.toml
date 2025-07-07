@@ -1,5 +1,5 @@
 [project]
-name = "tf"
+name = "testfunc"
 version = "0.1.0"
 description = "Cookiecutter template for generic Python 3 project with tooling configuration for testing, linting and IDE support"
 authors = [{ name = "Li Lin", email = "guru.lin@gmail.com" }]
