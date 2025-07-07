@@ -49,7 +49,7 @@ def ping_redis(host, port=6379):
     except Exception as e:
         message += f"error: {e}\n"
 
-    return message
+    return message + "\n"
 
 
 def ping_postgres(database_url):
@@ -69,7 +69,7 @@ def ping_postgres(database_url):
     except Exception as e:
         message += f"error: {e}\n"
 
-    return message
+    return message + "\n"
 
 
 def infra_check(source):
@@ -78,12 +78,10 @@ def infra_check(source):
 
     if source in ["db", "all"]:
         db_url = os.environ.get("DATABASE_URL", "postgresql://@/edgar3")
-        yield f"DATABASE_URL={db_url}\n\n"
         yield ping_postgres(db_url)
 
     if source in ["redis", "all"]:
         redis_svc = os.environ.get("REDIS_SVC", "localhost")
-        yield f"REDIS_SVC={redis_svc}\n\n"
         yield ping_redis(redis_svc)
 
 
