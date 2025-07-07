@@ -1,6 +1,6 @@
 # stage 1: build
 FROM python:3.12-bookworm AS builder
-LABEL org.opencontainers.image.source=https://github.com/owner/tf
+LABEL org.opencontainers.image.source=https://github.com/sloppycoder/testfunc
 LABEL org.opencontainers.image.description="Test Function for Knative"
 
 # install packages needed by python packages
